@@ -1,27 +1,19 @@
-
-
 export class AuthController {
-
-    constructor() {
-
-    }
+    constructor() {}
 
     /**
-     * 
-     * @param {*} req 
-     * @param {*} res 
+     *
+     * @param {*} req
+     * @param {*} res
      */
     async login(req, res) {
         const result = req.body;
-
     }
 
     /**
-     * 
-     * @param {*} req 
-     * @param {*} res 
+     *
+     * @param {*} req
+     * @param {*} res
      */
-    async register(req, res) {
-
-    }
+    async register(req, res) {}
 }

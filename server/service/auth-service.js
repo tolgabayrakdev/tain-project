@@ -1,12 +1,9 @@
-
+import client from '../database';
 
 export class AuthService {
-
     /**
-     * 
-     * @param {object} payload 
+     *
+     * @param {object} payload
      */
-    async login(payload) {
-
-    }
+    async login(payload) {}
 }
