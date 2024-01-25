@@ -1,7 +1,7 @@
 import Jwt from 'jsonwebtoken';
 import Crypto from 'crypto';
 
-export class Helper {
+export default class Helper {
     /**
      *
      * @param {object} payload
