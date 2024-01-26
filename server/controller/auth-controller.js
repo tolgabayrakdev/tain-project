@@ -1,10 +1,7 @@
 import AuthService from "../service/auth-service.js";
 
-
-
 export default class AuthController {
     authService = new AuthService();
-
     /**
      *
      * @param {*} req
@@ -22,9 +19,9 @@ export default class AuthController {
             });
             res.status(200).json({ message: 'Login has successful.' });
         } catch (error) {
+            console.log(error);
             res.status(500).json('Internal Server Error!');
         }
     }
-
 
 }

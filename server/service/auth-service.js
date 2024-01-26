@@ -26,8 +26,7 @@ export default class AuthService {
         return { access_token: accessToken, refresh_token: refreshToken };
     }
 
-
-    async deneme() {
-        console.log("Hi");
+    deneme(){
+        console.log("DENEME");
     }
 }
