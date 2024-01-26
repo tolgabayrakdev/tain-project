@@ -10,7 +10,8 @@ export default class AuthController {
     async login(req, res) {
         try {
             const { email, password } = req.body;
-            const result = await this.authService.login(email, password);
+            const result = await this?.authService.login(email, password);
+            console.log(this.authService.deneme);
             res.cookie('access_token', result.access_token, {
                 httpOnly: true,
             });
