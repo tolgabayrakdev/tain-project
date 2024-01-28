@@ -9,6 +9,7 @@ export class AuthController {
 
     public login = async (req: Request, res: Response) => {
         try {
+            const { email, password } = req.body;
 
         } catch (error) {
             if (error instanceof Exception) {
