@@ -10,6 +10,7 @@ export class AuthController {
     public login = async (req: Request, res: Response) => {
         try {
             const { email, password } = req.body;
+            const result = await this.authService.login(email, password);
 
         } catch (error) {
             if (error instanceof Exception) {
