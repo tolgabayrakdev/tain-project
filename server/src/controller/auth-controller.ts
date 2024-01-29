@@ -19,7 +19,7 @@ export class AuthController {
             res.cookie('refresh_token', result.refresh_token, {
                 httpOnly: true,
             });
-            res.status(200).json({ message: 'Login is sucessful.' });
+            res.status(200).json({ message: 'Login is successful.' });
         } catch (error) {
             if (error instanceof Exception) {
                 res.status(error.statusCode).json({ message: error.message });
