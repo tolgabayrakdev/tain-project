@@ -47,28 +47,23 @@ export class AuthService {
     public async register(payload: RegisterUser): Promise<object> {
         const { username, email, password } = payload;
         const hashPassword = this.helper.hashPassword(password);
-        try {
-            await client.query('BEGIN');
-            const isUsernameExist = await client.query(findByUsernameQuery, [
+        await client.query('BEGIN');
+        const isUsernameExist = await client.query(findByUsernameQuery, [
+            username,
+        ]);
+        const isEmailExist = await client.query(findByEmailQuery, [email]);
+        if (isEmailExist.rows.length) {
+            throw new BadRequestError('Email already exists!');
+        } else if (isUsernameExist.rows.length) {
+            throw new BadRequestError('Username already exists!');
+        } else {
+            const newUser = await client.query(registerQuery, [
                 username,
+                email,
+                hashPassword,
             ]);
-            const isEmailExist = await client.query(findByEmailQuery, [email]);
-            if (isEmailExist) {
-                throw new BadRequestError('Email already exists!');
-            } else if (isUsernameExist) {
-                throw new BadRequestError('Username alreadt exists!');
-            } else {
-                const newUser = await client.query(registerQuery, [
-                    username,
-                    email,
-                    hashPassword,
-                ]);
-                await client.query('COMMIT');
-                return newUser;
-            }
-        } catch (error: any) {
-            await client.query('ROLLBACK');
-            throw new Error(error);
+            await client.query('COMMIT');
+            return newUser;
         }
     }
 }

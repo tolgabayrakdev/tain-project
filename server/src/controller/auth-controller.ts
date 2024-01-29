@@ -24,11 +24,12 @@ export class AuthController {
             if (error instanceof Exception) {
                 res.status(error.statusCode).json({ message: error.message });
             } else {
+                res.status(500).json({ message: "Internal server error!" });
             }
         }
     };
 
-    public register = async (req: Request, res: Response): Promise<void> => {
+    public register = async (req: Request, res: Response) => {
         try {
             await this.authService.register(req.body);
             res.status(201).json({ message: 'Account created successfully.' });
