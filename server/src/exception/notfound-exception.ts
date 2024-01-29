@@ -1,8 +1,7 @@
-import { Exception } from "./exception"
-
+import { Exception } from './exception';
 
 export class NotFoundError extends Exception {
     constructor(message: string) {
-        super(message, 500)
+        super(message, 500);
     }
 }

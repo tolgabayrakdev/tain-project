@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "nodemon src/app.ts",
         "build": "tsc",
-        "lint": "npx eslint ."
+        "lint": "npx eslint .",
+        "prettier": "npx prettier . --write"
     },
     "keywords": [],
     "author": "",
