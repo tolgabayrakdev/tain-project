@@ -8,9 +8,8 @@ type ReturnTokenTypes = {
 };
 
 export class AuthService {
-    private helper: Helper;
 
-    constructor(helper: Helper) {
+    constructor(private helper: Helper) {
         this.helper = helper;
     }
 

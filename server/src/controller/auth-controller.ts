@@ -3,9 +3,8 @@ import { Exception } from '../exception/exception';
 import { AuthService } from '../service/auth-service';
 
 export class AuthController {
-    private authService: AuthService;
 
-    constructor(authService: AuthService) {
+    constructor(private authService: AuthService) {
         this.authService = authService;
     }
 
