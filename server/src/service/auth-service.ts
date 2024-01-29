@@ -9,8 +9,10 @@ type ReturnTokenTypes = {
 
 export class AuthService {
 
-    constructor(private helper: Helper) {
-        this.helper = helper;
+    private helper: Helper;
+
+    constructor() {
+        this.helper = new Helper();
     }
 
     public async login(
