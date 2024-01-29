@@ -1,12 +1,12 @@
 declare namespace Express {
     export interface Request {
-      user: any;
+        user: any;
     }
     export interface Response {
-      user: any;
+        user: any;
     }
-  
+
     export interface Schema {
-      validate: object;
+        validate: object;
     }
-  }
+}

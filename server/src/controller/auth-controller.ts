@@ -3,7 +3,7 @@ import { Exception } from '../exception/exception';
 import { AuthService } from '../service/auth-service';
 
 export class AuthController {
-    private authService: AuthService
+    private authService: AuthService;
 
     constructor() {
         this.authService = new AuthService();
@@ -16,6 +16,16 @@ export class AuthController {
             res.cookie('access_token', result.access_token, {
                 httpOnly: true,
             });
+        } catch (error) {
+            if (error instanceof Exception) {
+                res.status(error.statusCode).json({ message: error.message });
+            } else {
+            }
+        }
+    };
+
+    public register = async (req: Request, res: Response) => {
+        try {
         } catch (error) {
             if (error instanceof Exception) {
                 res.status(error.statusCode).json({ message: error.message });
