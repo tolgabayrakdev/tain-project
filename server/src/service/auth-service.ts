@@ -1,5 +1,7 @@
 import client from '../database';
 import { BadRequestError } from '../exception/badrequest-exception';
+import { Exception } from '../exception/exception';
+import { InternalServerError } from '../exception/internalserver-exception';
 import { NotFoundError } from '../exception/notfound-exception';
 import {
     loginQuery,
@@ -44,26 +46,36 @@ export class AuthService {
         return { access_token: accessToken, refresh_token: refreshToken };
     }
 
-    public async register(payload: RegisterUser): Promise<object> {
+    public async register(payload: RegisterUser) {
         const { username, email, password } = payload;
         const hashPassword = this.helper.hashPassword(password);
-        await client.query('BEGIN');
-        const isUsernameExist = await client.query(findByUsernameQuery, [
-            username,
-        ]);
-        const isEmailExist = await client.query(findByEmailQuery, [email]);
-        if (isEmailExist.rows.length) {
-            throw new BadRequestError('Email already exists!');
-        } else if (isUsernameExist.rows.length) {
-            throw new BadRequestError('Username already exists!');
-        } else {
-            const newUser = await client.query(registerQuery, [
+
+        try {
+            await client.query('BEGIN');
+            const isUsernameExist = await client.query(findByUsernameQuery, [
                 username,
-                email,
-                hashPassword,
             ]);
-            await client.query('COMMIT');
-            return newUser;
+            const isEmailExist = await client.query(findByEmailQuery, [email]);
+            if (isEmailExist.rows.length) {
+                throw new BadRequestError('Email already exists!');
+            } else if (isUsernameExist.rows.length) {
+                throw new BadRequestError('Username already exists!');
+            } else {
+                const newUser = await client.query(registerQuery, [
+                    username,
+                    email,
+                    hashPassword,
+                ]);
+                await client.query('COMMIT');
+                return newUser;
+            }
+        } catch (error) {
+            await client.query('ROLLBACK');
+            if (error instanceof Exception) {
+                throw error;
+            } else {
+                throw new InternalServerError('Internal Server Error!');
+            }
         }
     }
 }

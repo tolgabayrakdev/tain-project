@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Exception } from '../exception/exception';
 import { AuthService } from '../service/auth-service';
 
@@ -22,14 +22,18 @@ export class AuthController {
             res.status(200).json({ message: 'Login is successful.' });
         } catch (error) {
             if (error instanceof Exception) {
-                res.status(error.statusCode).json({ message: error.message });
+                throw error;
             } else {
-                res.status(500).json({ message: "Internal server error!" });
+                res.status(500).json({ message: 'Internal server error!' });
             }
         }
     };
 
-    public register = async (req: Request, res: Response) => {
+    public register = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) => {
         try {
             await this.authService.register(req.body);
             res.status(201).json({ message: 'Account created successfully.' });

@@ -7,7 +7,6 @@ import './database';
 import 'dotenv/config';
 
 import authRouter from './routes/auth-router';
-
 const app = express();
 
 app.use(express.json());
