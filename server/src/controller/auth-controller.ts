@@ -22,7 +22,7 @@ export class AuthController {
             res.status(200).json({ message: 'Login is successful.' });
         } catch (error) {
             if (error instanceof Exception) {
-                throw error;
+                res.status(error.statusCode).json({ message: error.message });
             } else {
                 res.status(500).json({ message: 'Internal server error!' });
             }
