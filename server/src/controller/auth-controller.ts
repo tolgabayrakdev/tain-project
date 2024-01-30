@@ -29,11 +29,7 @@ export class AuthController {
         }
     };
 
-    public register = async (
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ) => {
+    public register = async (req: Request, res: Response) => {
         try {
             await this.authService.register(req.body);
             res.status(201).json({ message: 'Account created successfully.' });
