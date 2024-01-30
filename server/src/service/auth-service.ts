@@ -31,7 +31,6 @@ export class AuthService {
 
     public async login(email: string, password: string): Promise<ReturnTokens> {
         const hashPassword = this.helper.hashPassword(password);
-
         const result = await client.query(loginQuery, [email, hashPassword]);
         if (result.rows.length === 0) {
             throw new NotFoundError('User not found!');
@@ -49,9 +48,8 @@ export class AuthService {
     public async register(payload: RegisterUser) {
         const { username, email, password } = payload;
         const hashPassword = this.helper.hashPassword(password);
-
         try {
-            await client.query('BEGIN');
+            await client.query("BEGIN");
             const isUsernameExist = await client.query(findByUsernameQuery, [
                 username,
             ]);
@@ -64,18 +62,21 @@ export class AuthService {
                 const newUser = await client.query(registerQuery, [
                     username,
                     email,
-                    hashPassword,
+                    hashPassword
                 ]);
-                await client.query('COMMIT');
+                await client.query("COMMIT");
                 return newUser;
             }
-        } catch (error) {
-            await client.query('ROLLBACK');
+        }
+        catch (error) {
+            await client.query("ROLLBACK")
             if (error instanceof Exception) {
                 throw error;
             } else {
-                throw new InternalServerError('Internal Server Error!');
+                throw new InternalServerError("Internal Server Error!")
             }
+
         }
+
     }
 }
