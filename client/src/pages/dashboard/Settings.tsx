@@ -2,13 +2,15 @@ import { Breadcrumb } from "antd"
 
 type Props = {}
 
-export default function Home({ }: Props) {
+export default function Settings({ }: Props) {
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>Settings</Breadcrumb.Item>
             </Breadcrumb>
+
+
             <div
                 style={{
                     padding: 24,
@@ -16,9 +18,8 @@ export default function Home({ }: Props) {
 
                 }}
             >
-                Bill is a cat.
+                Settings.
             </div>
         </div>
-
     )
 }
