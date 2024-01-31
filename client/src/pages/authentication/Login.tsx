@@ -1,31 +1,43 @@
 import { Flex, Layout, Card, Form, Input, Button, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [messageApi, contextHolder] = message.useMessage();
+    const navigate = useNavigate();
+
 
     const onFinish = async (values: { email: string; password: string }) => {
-        const result = await fetch('http://127.0.0.1:5001', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                email: values.email,
-                password: values.password,
-            }),
-        });
-        if (result.status === 200) {
-            messageApi.open({
-                type: 'success',
-                content: 'This is a success message',
+        try {
+            const result = await fetch('http://127.0.0.1:5001/api/v1/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: values.email,
+                    password: values.password,
+                }),
             });
-        } else {
+            if (result.status === 200) {
+                messageApi.open({
+                    type: 'success',
+                    content: 'This is a success message',
+                });
+                navigate("/home")
+            } else {
+                messageApi.open({
+                    type: 'warning',
+                    content: 'Email or password wrong!',
+                });
+            }
+        } catch (error) {
             messageApi.open({
-                type: 'warning',
-                content: 'Email or password wrong!',
+                type: 'error',
+                content: 'Something went wrong!',
             });
         }
+
     };
 
     return (
