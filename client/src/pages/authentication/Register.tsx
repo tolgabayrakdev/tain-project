@@ -1,30 +1,37 @@
 import { Button, Form, Input, Layout, message, Card, Flex } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
 
-    const onFinish = async (values: { username: string, email: string, password: string }) => {
+    const onFinish = async (values: {
+        username: string;
+        email: string;
+        password: string;
+    }) => {
         try {
-            const result = await fetch("http://127.0.0.1:5001/api/v1/auth/register", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
+            const result = await fetch(
+                'http://127.0.0.1:5001/api/v1/auth/register',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: values.username,
+                        email: values.email,
+                        password: values.password,
+                    }),
                 },
-                credentials: 'include',
-                body: JSON.stringify({
-                    username: values.username,
-                    email: values.email,
-                    password: values.password
-                }),
-            });
+            );
             if (result.status === 201) {
                 messageApi.open({
                     type: 'success',
                     content: 'This is a success message',
                 });
-                navigate("/home")
+                navigate('/home');
             } else if (result.status === 400) {
                 console.log(result);
 
@@ -33,7 +40,6 @@ const Register = () => {
                     content: 'Email or username already used',
                 });
             }
-
         } catch (error) {
             messageApi.open({
                 type: 'error',
@@ -101,8 +107,9 @@ const Register = () => {
                         >
                             <Input.Password placeholder="Password" />
                         </Form.Item>
+                        <Link to="/login">You have already account ?</Link>
                         <Button
-                            style={{ width: '100%' }}
+                            style={{ width: '100%', marginTop: 12 }}
                             type="primary"
                             htmlType="submit"
                         >
@@ -112,7 +119,6 @@ const Register = () => {
                 </Card>
             </Flex>
         </Layout>
-
     );
 };
 
