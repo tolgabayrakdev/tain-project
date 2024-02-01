@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
+import { Flex, Layout } from "antd";
 
 
 function AuthWrapper(WrappedComponent: any) {
@@ -35,15 +36,23 @@ function AuthWrapper(WrappedComponent: any) {
             return <Loading />
         } else if (accessDenied) {
             return (
-                <section>
-                    <h3>Access Denied!</h3>
-                    <Link to="/login">
-                        Go to login page
-                    </Link>
-                </section>
+                <Layout>
+                    <Flex
+                        style={{ height: '100vh' }}
+                        justify="center"
+                        align="center"
+                        vertical
+                    >
+                        <h3 style={{ color: "red", fontSize: 26 }}>Access Denied!</h3>
+                        <Link to="/login">
+                            Go to login page
+                        </Link>
+                    </Flex>
+                </Layout>
+
             )
         }
-        return <WrappedComponent {...props} />
+        return <WrappedComponent loggedIn={loogedIn} {...props} />
     }
     return Wrapper;
 }

@@ -9,6 +9,7 @@ import {
 import type { MenuProps } from 'antd';
 import { Divider, Layout, Menu, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
+import AuthWrapper from '../util/AuthWrapper';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -43,7 +44,7 @@ const items: MenuItem[] = [
   getItem('Files', '9', <FileOutlined />),
 ];
 
-const Home: React.FC = () => {
+const Home = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -73,7 +74,7 @@ const Home: React.FC = () => {
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: '0 16px' }}>
-        
+
           <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>
@@ -84,4 +85,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default AuthWrapper(Home);
