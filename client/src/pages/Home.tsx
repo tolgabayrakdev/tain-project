@@ -1,8 +1,8 @@
-import { Breadcrumb } from "antd"
+import { Breadcrumb } from 'antd';
 
-type Props = {}
+type Props = {};
 
-export default function Home({ }: Props) {
+export default function Home({}: Props) {
     return (
         <div>
             <Breadcrumb style={{ margin: '16px 0' }}>
@@ -13,12 +13,10 @@ export default function Home({ }: Props) {
                 style={{
                     padding: 24,
                     minHeight: 360,
-
                 }}
             >
                 Bill is a cat.
             </div>
         </div>
-
-    )
+    );
 }
