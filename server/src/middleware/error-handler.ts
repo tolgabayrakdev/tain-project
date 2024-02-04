@@ -1,8 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { Exception } from '../exception/exception';
 
-const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof Exception) {        
+const errorHandler = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    if (err instanceof Exception) {
         res.status(err.statusCode).json({ message: err.message });
     } else {
         console.error(err.stack);

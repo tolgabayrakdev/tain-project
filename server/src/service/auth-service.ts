@@ -8,7 +8,7 @@ import {
     registerQuery,
     findByEmailQuery,
     findByUsernameQuery,
-    verifyUserQuery
+    verifyUserQuery,
 } from '../queries/login';
 import { Helper } from '../util/helper';
 
@@ -81,9 +81,11 @@ export class AuthService {
     public async verify(token: string): Promise<object> {
         try {
             const decodedToken: any = this.helper.decodeToken(token);
-            const result = await client.query(verifyUserQuery, [decodedToken.id]);
+            const result = await client.query(verifyUserQuery, [
+                decodedToken.id,
+            ]);
             if (result.rows.length === 0) {
-                throw new NotFoundError("User not found!")
+                throw new NotFoundError('User not found!');
             }
             const userInformation = result.rows[0];
             return userInformation;

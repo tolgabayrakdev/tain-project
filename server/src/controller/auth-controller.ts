@@ -52,8 +52,7 @@ export class AuthController {
         try {
             const token: string = req.cookies.access_token;
             const userInformation = await this.authService.verify(token);
-            res.status(200).json({ "user": userInformation})
-
+            res.status(200).json({ user: userInformation });
         } catch (error) {
             if (error instanceof Exception) {
                 res.status(error.statusCode).json({ message: error.message });
@@ -61,5 +60,5 @@ export class AuthController {
                 res.status(500).json({ message: 'Internal server error!' });
             }
         }
-    }
+    };
 }
