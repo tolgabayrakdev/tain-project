@@ -47,4 +47,19 @@ export class AuthController {
         res.clearCookie('refresh_token');
         res.status(200).json({ message: 'Log out is sucessful.' });
     };
+
+    public verify = async (req: Request, res: Response) => {
+        try {
+            const token: string = req.cookies.access_token;
+            const userInformation = await this.authService.verify(token);
+            res.status(200).json({ "user": userInformation})
+
+        } catch (error) {
+            if (error instanceof Exception) {
+                res.status(error.statusCode).json({ message: error.message });
+            } else {
+                res.status(500).json({ message: 'Internal server error!' });
+            }
+        }
+    }
 }

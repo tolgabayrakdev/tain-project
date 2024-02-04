@@ -8,6 +8,7 @@ import {
     registerQuery,
     findByEmailQuery,
     findByUsernameQuery,
+    verifyUserQuery
 } from '../queries/login';
 import { Helper } from '../util/helper';
 
@@ -69,6 +70,24 @@ export class AuthService {
             }
         } catch (error) {
             await client.query('ROLLBACK');
+            if (error instanceof Exception) {
+                throw error;
+            } else {
+                throw new InternalServerError('Internal Server Error!');
+            }
+        }
+    }
+
+    public async verify(token: string): Promise<object> {
+        try {
+            const decodedToken: any = this.helper.decodeToken(token);
+            const result = await client.query(verifyUserQuery, [decodedToken.id]);
+            if (result.rows.length === 0) {
+                throw new NotFoundError("User not found!")
+            }
+            const userInformation = result.rows[0];
+            return userInformation;
+        } catch (error) {
             if (error instanceof Exception) {
                 throw error;
             } else {
