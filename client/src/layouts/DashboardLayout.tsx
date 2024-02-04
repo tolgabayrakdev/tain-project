@@ -11,6 +11,7 @@ import type { MenuProps } from 'antd';
 import { Button, Divider, Layout, Menu, Tooltip, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../util/AuthWrapper';
+import Loading from '../components/Loading';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -47,6 +48,7 @@ const items: MenuItem[] = [
 
 const Home = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const {
         token: { colorBgContainer },
@@ -54,6 +56,7 @@ const Home = () => {
 
 
     const handleLogout = async () => {
+        setLoading(false);
         try {
             const result = await fetch("http://localhost:5001/api/v1/auth/logout", {
                 method: "POST",
@@ -61,6 +64,7 @@ const Home = () => {
             });
             if (result.status === 200) {
                 navigate("/login");
+                setLoading(true);
             }
         } catch (error) {
             throw error;
@@ -88,21 +92,24 @@ const Home = () => {
                     items={items}
                 />
             </Sider>
-            <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginRight: 16, marginTop: 12 }}>
-                        <Tooltip title="Logout">
-                            <Button onClick={handleLogout} icon={<PoweroffOutlined />} type="primary" danger />
-                        </Tooltip>
-                    </div>
-                </Header>
-                <Content style={{ margin: '0 16px' }}>
-                    <Outlet />
-                </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
-            </Layout>
+            {
+                loading ? <Layout>
+                    <Header style={{ padding: 0, background: colorBgContainer }}>
+                        <div style={{ display: "flex", justifyContent: "flex-end", marginRight: 16, marginTop: 12 }}>
+                            <Tooltip title="Logout">
+                                <Button onClick={handleLogout} icon={<PoweroffOutlined />} type="primary" danger />
+                            </Tooltip>
+                        </div>
+                    </Header>
+                    <Content style={{ margin: '0 16px' }}>
+                        <Outlet />
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>
+                        Ant Design ©{new Date().getFullYear()} Created by TainProject
+                    </Footer>
+                </Layout> : <Loading />
+            }
+
         </Layout>
     );
 };

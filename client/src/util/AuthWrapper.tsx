@@ -22,7 +22,7 @@ function AuthWrapper(WrappedComponent: any) {
                     if (res.status === 200) {
                         setLoading(false);
                         setLoggedIn(true);
-                    } else if (res.status == 403) {
+                    } else if (res.status === 403 || res.status === 401) {
                         setLoading(false);
                         setAccessDenied(true);
                     }
