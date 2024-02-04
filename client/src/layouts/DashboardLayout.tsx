@@ -4,12 +4,12 @@ import {
     FileOutlined,
     PieChartOutlined,
     TeamOutlined,
-    UserOutlined,
-    PoweroffOutlined
+    LogoutOutlined,
+    SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Divider, Layout, Menu, Tooltip, theme } from 'antd';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../util/AuthWrapper';
 import Loading from '../components/Loading';
 
@@ -32,18 +32,14 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Option 1', '1', <PieChartOutlined />),
+    getItem('Dashboard', '1', <PieChartOutlined />),
     getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('User', 'sub1', <UserOutlined />, [
-        getItem('Tom', '3'),
-        getItem('Bill', '4'),
-        getItem('Alex', '5'),
-    ]),
     getItem('Team', 'sub2', <TeamOutlined />, [
         getItem('Team 1', '6'),
         getItem('Team 2', '8'),
     ]),
-    getItem('Files', '9', <FileOutlined />)
+    getItem('Files', '9', <FileOutlined />),
+    getItem(<Link to='/login'>Settings</Link>, '10', <SettingOutlined />)
 ];
 
 const Home = () => {
@@ -53,6 +49,10 @@ const Home = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+
+    const onClick = (e: any) => {
+        console.log('click ', e.key);
+    }
 
 
     const handleLogout = async () => {
@@ -86,6 +86,7 @@ const Home = () => {
                     <p>LOGO</p>
                 </Divider>
                 <Menu
+                    onClick={onClick}
                     theme="dark"
                     defaultSelectedKeys={['1']}
                     mode="inline"
@@ -97,7 +98,7 @@ const Home = () => {
                     <Header style={{ padding: 0, background: colorBgContainer }}>
                         <div style={{ display: "flex", justifyContent: "flex-end", marginRight: 16, marginTop: 12 }}>
                             <Tooltip title="Logout">
-                                <Button onClick={handleLogout} icon={<PoweroffOutlined />} type="primary" danger />
+                                <Button onClick={handleLogout} icon={<LogoutOutlined />} type="primary" danger />
                             </Tooltip>
                         </div>
                     </Header>

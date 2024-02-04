@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
-import { Flex, Layout } from 'antd';
 
 function AuthWrapper(WrappedComponent: any) {
     const Wrapper = (props: any) => {
