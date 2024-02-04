@@ -5,6 +5,7 @@ import {
     PieChartOutlined,
     TeamOutlined,
     UserOutlined,
+    PoweroffOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Divider, Layout, Menu, theme } from 'antd';
@@ -42,6 +43,11 @@ const items: MenuItem[] = [
         getItem('Team 2', '8'),
     ]),
     getItem('Files', '9', <FileOutlined />),
+    getItem(
+        <span style={{ fontStyle: "" }}>Log out</span>,
+        "d",
+        <PoweroffOutlined />
+    )
 ];
 
 const Home = () => {
