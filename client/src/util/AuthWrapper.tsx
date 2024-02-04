@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { Flex, Layout } from 'antd';
 
@@ -8,6 +8,7 @@ function AuthWrapper(WrappedComponent: any) {
         const [loogedIn, setLoggedIn] = useState(false);
         const [loading, setLoading] = useState(true);
         const [accessDenied, setAccessDenied] = useState(false);
+        const navigate = useNavigate();
 
         useEffect(() => {
             const verifyAuthToken = async () => {
@@ -37,21 +38,10 @@ function AuthWrapper(WrappedComponent: any) {
         if (loading) {
             return <Loading />;
         } else if (accessDenied) {
-            return (
-                <Layout>
-                    <Flex
-                        style={{ height: '100vh' }}
-                        justify="center"
-                        align="center"
-                        vertical
-                    >
-                        <h3 style={{ color: 'red', fontSize: 26 }}>
-                            Access Denied!
-                        </h3>
-                        <Link to="/login">Go to login page</Link>
-                    </Flex>
-                </Layout>
-            );
+            setLoading(true);
+            setTimeout(() => {
+                navigate("/login")
+            }, 1000)
         }
         return <WrappedComponent loggedIn={loogedIn} {...props} />;
     };
