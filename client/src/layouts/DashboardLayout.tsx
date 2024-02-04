@@ -8,8 +8,8 @@ import {
     PoweroffOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Divider, Layout, Menu, theme } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Button, Divider, Layout, Menu, Tooltip, theme } from 'antd';
+import { Outlet, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../util/AuthWrapper';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -42,19 +42,30 @@ const items: MenuItem[] = [
         getItem('Team 1', '6'),
         getItem('Team 2', '8'),
     ]),
-    getItem('Files', '9', <FileOutlined />),
-    getItem(
-        <span style={{ fontStyle: "" }}>Log out</span>,
-        "d",
-        <PoweroffOutlined />
-    )
+    getItem('Files', '9', <FileOutlined />)
 ];
 
 const Home = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const navigate = useNavigate();
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+
+
+    const handleLogout = async () => {
+        try {
+            const result = await fetch("http://localhost:5001/api/v1/auth/logout", {
+                method: "POST",
+                credentials: "include"
+            });
+            if (result.status === 200) {
+                navigate("/login");
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -78,7 +89,13 @@ const Home = () => {
                 />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }} />
+                <Header style={{ padding: 0, background: colorBgContainer }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginRight: 16, marginTop: 12 }}>
+                        <Tooltip title="Logout">
+                            <Button onClick={handleLogout} icon={<PoweroffOutlined />} type="primary" danger />
+                        </Tooltip>
+                    </div>
+                </Header>
                 <Content style={{ margin: '0 16px' }}>
                     <Outlet />
                 </Content>
