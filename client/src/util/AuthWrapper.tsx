@@ -13,7 +13,7 @@ function AuthWrapper(WrappedComponent: any) {
             const verifyAuthToken = async () => {
                 try {
                     const res = await fetch(
-                        'http://localhost:8000/api/v1/auth/verify',
+                        'http://localhost:5001/api/v1/auth/verify',
                         {
                             method: 'POST',
                             credentials: 'include',

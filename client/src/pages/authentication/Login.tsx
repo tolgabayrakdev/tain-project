@@ -8,7 +8,7 @@ const Login = () => {
     const onFinish = async (values: { email: string; password: string }) => {
         try {
             const result = await fetch(
-                'http://127.0.0.1:5001/api/v1/auth/login',
+                'http://localhost:5001/api/v1/auth/login',
                 {
                     method: 'POST',
                     headers: {
@@ -26,7 +26,7 @@ const Login = () => {
                     type: 'success',
                     content: 'This is a success message',
                 });
-                navigate('/home');
+                navigate('/');
             } else {
                 messageApi.open({
                     type: 'warning',
