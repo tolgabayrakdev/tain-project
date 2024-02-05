@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     DesktopOutlined,
     FileOutlined,
     PieChartOutlined,
     TeamOutlined,
     LogoutOutlined,
-    SettingOutlined
+    SettingOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Divider, Layout, Menu, Tooltip, theme } from 'antd';
@@ -31,17 +31,6 @@ function getItem(
     } as MenuItem;
 }
 
-const items: MenuItem[] = [
-    getItem(<Link to="/">Dashboard</Link>, '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('Team', 'sub2', <TeamOutlined />, [
-        getItem('Team 1', '6'),
-        getItem('Team 2', '8'),
-    ]),
-    getItem('Files', '9', <FileOutlined />),
-    getItem(<Link to='/settings'>Settings</Link>, '10', <SettingOutlined />)
-];
-
 const Home = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -53,23 +42,61 @@ const Home = () => {
 
     const onClick = (e: any) => {
         console.log('click ', e.key);
-    }
+    };
+
+    const items: MenuItem[] = [
+        getItem(
+            <Link
+                style={{
+                    textDecoration:
+                        location.pathname === '/' ? 'underline' : '',
+                }}
+                to="/"
+            >
+                Dashboard
+            </Link>,
+            '1',
+            <PieChartOutlined />,
+        ),
+        getItem('Option 2', '2', <DesktopOutlined />),
+        getItem('Team', 'sub2', <TeamOutlined />, [
+            getItem('Team 1', '6'),
+            getItem('Team 2', '8'),
+        ]),
+        getItem('Files', '9', <FileOutlined />),
+        getItem(
+            <Link
+                style={{
+                    textDecoration:
+                        location.pathname === '/settings' ? 'underline' : '',
+                }}
+                to="/settings"
+            >
+                Settings
+            </Link>,
+            '10',
+            <SettingOutlined />,
+        ),
+    ];
 
     const handleLogout = async () => {
         setLoading(false);
         try {
-            const result = await fetch("http://localhost:5001/api/v1/auth/logout", {
-                method: "POST",
-                credentials: "include"
-            });
+            const result = await fetch(
+                'http://localhost:5001/api/v1/auth/logout',
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                },
+            );
             if (result.status === 200) {
-                navigate("/login");
+                navigate('/login');
                 setLoading(true);
             }
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -89,16 +116,31 @@ const Home = () => {
                     onClick={onClick}
                     theme="dark"
                     defaultSelectedKeys={['1']}
+                    selectedKeys={[location.pathname]}
                     mode="inline"
                     items={items}
                 />
             </Sider>
-            {
-                loading ? <Layout>
-                    <Header style={{ padding: 0, background: colorBgContainer }}>
-                        <div style={{ display: "flex", justifyContent: "flex-end", marginRight: 16, marginTop: 12 }}>
+            {loading ? (
+                <Layout>
+                    <Header
+                        style={{ padding: 0, background: colorBgContainer }}
+                    >
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                marginRight: 16,
+                                marginTop: 12,
+                            }}
+                        >
                             <Tooltip title="Logout">
-                                <Button onClick={handleLogout} icon={<LogoutOutlined />} type="primary" danger />
+                                <Button
+                                    onClick={handleLogout}
+                                    icon={<LogoutOutlined />}
+                                    type="primary"
+                                    danger
+                                />
                             </Tooltip>
                         </div>
                     </Header>
@@ -106,11 +148,13 @@ const Home = () => {
                         <Outlet />
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
-                        Ant Design ©{new Date().getFullYear()} Created by TainProject
+                        Ant Design ©{new Date().getFullYear()} Created by
+                        TainProject
                     </Footer>
-                </Layout> : <Loading />
-            }
-
+                </Layout>
+            ) : (
+                <Loading />
+            )}
         </Layout>
     );
 };

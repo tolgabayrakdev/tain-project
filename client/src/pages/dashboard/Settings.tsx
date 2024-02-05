@@ -5,9 +5,10 @@ type Props = {};
 export default function Settings({}: Props) {
     return (
         <div>
-            <Breadcrumb items={[{title: "Dashboard" }, { title: "Settings"}]} style={{ margin: '16px 0' }}>
-          
-            </Breadcrumb>
+            <Breadcrumb
+                items={[{ title: 'Dashboard' }, { title: 'Settings' }]}
+                style={{ margin: '16px 0' }}
+            ></Breadcrumb>
 
             <div
                 style={{
