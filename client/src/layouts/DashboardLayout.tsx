@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     DesktopOutlined,
     FileOutlined,
@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Divider, Layout, Menu, Tooltip, theme } from 'antd';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../util/AuthWrapper';
 import Loading from '../components/Loading';
 
@@ -32,20 +32,21 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-    getItem('Dashboard', '1', <PieChartOutlined />),
+    getItem(<Link to="/">Dashboard</Link>, '1', <PieChartOutlined />),
     getItem('Option 2', '2', <DesktopOutlined />),
     getItem('Team', 'sub2', <TeamOutlined />, [
         getItem('Team 1', '6'),
         getItem('Team 2', '8'),
     ]),
     getItem('Files', '9', <FileOutlined />),
-    getItem(<Link to='/login'>Settings</Link>, '10', <SettingOutlined />)
+    getItem(<Link to='/settings'>Settings</Link>, '10', <SettingOutlined />)
 ];
 
 const Home = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    let location = useLocation();
     const {
         token: { colorBgContainer },
     } = theme.useToken();
@@ -53,7 +54,6 @@ const Home = () => {
     const onClick = (e: any) => {
         console.log('click ', e.key);
     }
-
 
     const handleLogout = async () => {
         setLoading(false);
