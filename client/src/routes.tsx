@@ -5,6 +5,8 @@ const Register = lazy(() => import('./pages/authentication/Register'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Home = lazy(() => import('./pages/Home'));
 
+const DashboardLayout = lazy(() => import("./layouts/AuthenticationLayout"));
+
 const routes = createBrowserRouter([
     {
         path: '/',
@@ -15,13 +17,14 @@ const routes = createBrowserRouter([
         element: <NotFound />,
     },
     {
-        path: '/login',
-        element: <Login />,
-    },
-    {
-        path: '/register',
-        element: <Register />,
-    },
+        path: "/",
+        element: <DashboardLayout />,
+        children: [
+            { path: "login", element: <Login /> },
+            { path: "register", element: <Register /> }
+        ]
+    }
+
 ]);
 
 export default routes;
