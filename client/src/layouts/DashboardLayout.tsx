@@ -4,14 +4,14 @@ import { Outlet } from 'react-router-dom';
 
 type Props = {};
 
-export default function DashboardLayout({}: Props) {
+export default function DashboardLayout({ }: Props) {
     const [opened, { toggle }] = useDisclosure();
 
     return (
         <AppShell
             header={{ height: 60 }}
             navbar={{
-                width: 300,
+                width: 260,
                 breakpoint: 'sm',
                 collapsed: { mobile: !opened },
             }}
