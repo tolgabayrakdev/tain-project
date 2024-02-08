@@ -4,10 +4,12 @@ const Login = lazy(() => import('./pages/authentication/Login'));
 const Register = lazy(() => import('./pages/authentication/Register'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Home = lazy(() => import('./pages/Home'));
-const IndexPage = lazy(() => import("./pages/dashboard/Index"));
+const IndexPage = lazy(() => import('./pages/dashboard/Index'));
 
-const AuthenticationLayout = lazy(() => import("./layouts/AuthenticationLayout"));
-const DashboardLayout = lazy(() => import("./layouts/DashboardLayout"));
+const AuthenticationLayout = lazy(
+    () => import('./layouts/AuthenticationLayout'),
+);
+const DashboardLayout = lazy(() => import('./layouts/DashboardLayout'));
 
 const routes = createBrowserRouter([
     {
@@ -19,21 +21,18 @@ const routes = createBrowserRouter([
         element: <NotFound />,
     },
     {
-        path: "/",
+        path: '/',
         element: <AuthenticationLayout />,
         children: [
-            { path: "login", element: <Login /> },
-            { path: "register", element: <Register /> }
-        ]
+            { path: 'login', element: <Login /> },
+            { path: 'register', element: <Register /> },
+        ],
     },
     {
-        path: "/dashboard",
+        path: '/dashboard',
         element: <DashboardLayout />,
-        children: [
-            { path: "", element: <IndexPage /> }
-        ]
-    }
-
+        children: [{ path: '', element: <IndexPage /> }],
+    },
 ]);
 
 export default routes;

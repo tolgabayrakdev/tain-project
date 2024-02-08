@@ -5,14 +5,14 @@ import {
     Button,
     Group,
     Box,
-    PasswordInput
+    PasswordInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 type Props = {};
 
-export default function Login({ }: Props) {
+export default function Login({}: Props) {
     const form = useForm({
         initialValues: {
             email: '',
@@ -28,31 +28,33 @@ export default function Login({ }: Props) {
         },
     });
 
-    const submitLogin = async (values: { email: string, password: string }) => {
+    const submitLogin = async (values: { email: string; password: string }) => {
         try {
-            const result = await fetch("http:localhost:5001/api/v1/auth/login", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    'Content-Type': 'application/json'
+            const result = await fetch(
+                'http:localhost:5001/api/v1/auth/login',
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: values.email,
+                        password: values.password,
+                    }),
                 },
-                body: JSON.stringify({
-                    email: values.email,
-                    password: values.password
-                })
-            });
+            );
             if (result.status === 200) {
-
-            }else {
+            } else {
                 notifications.show({
                     title: 'Default notification',
                     message: 'Hey there, your code is awesome! 🤥',
-                  })
+                });
             }
         } catch (error) {
             console.log(error);
         }
-    }
+    };
     return (
         <div className="flex h-screen justify-center items-center">
             <Box w={400} className="border p-6 rounded-xl bg-gray-50">

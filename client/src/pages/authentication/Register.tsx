@@ -11,7 +11,7 @@ import { useForm } from '@mantine/form';
 
 type Props = {};
 
-export default function Register({ }: Props) {
+export default function Register({}: Props) {
     const form = useForm({
         initialValues: {
             username: '',
@@ -21,7 +21,8 @@ export default function Register({ }: Props) {
         },
 
         validate: {
-            username: (value) => value.length < 3 ? 'You must be at least 3 to username' : null,
+            username: (value) =>
+                value.length < 3 ? 'You must be at least 3 to username' : null,
             email: (value) =>
                 /^\S+@\S+$/.test(value) ? null : 'Invalid email',
             password: (value) =>

@@ -1,21 +1,30 @@
-import { AppShell, Burger, Group, Skeleton } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
-import { Outlet } from "react-router-dom";
+import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Outlet } from 'react-router-dom';
 
-type Props = {}
+type Props = {};
 
-export default function DashboardLayout({ }: Props) {
+export default function DashboardLayout({}: Props) {
     const [opened, { toggle }] = useDisclosure();
 
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+            navbar={{
+                width: 300,
+                breakpoint: 'sm',
+                collapsed: { mobile: !opened },
+            }}
             padding="md"
         >
             <AppShell.Header>
                 <Group h="100%" px="md">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Burger
+                        opened={opened}
+                        onClick={toggle}
+                        hiddenFrom="sm"
+                        size="sm"
+                    />
                     <p>Logo</p>
                 </Group>
             </AppShell.Header>
@@ -31,6 +40,5 @@ export default function DashboardLayout({ }: Props) {
                 <Outlet />
             </AppShell.Main>
         </AppShell>
-
-    )
+    );
 }
