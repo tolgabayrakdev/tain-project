@@ -1,5 +1,6 @@
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, Menu, Skeleton, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { IconLogout, IconSettings } from '@tabler/icons-react';
 import { Outlet } from 'react-router-dom';
 
 type Props = {};
@@ -25,7 +26,28 @@ export default function DashboardLayout({ }: Props) {
                         hiddenFrom="sm"
                         size="sm"
                     />
-                    <p>Logo</p>
+                    <div>
+                        <p>Logo</p>
+                    </div>
+                    <div className='ml-auto mr-4'>
+                        <Menu shadow="md" width={180}>
+                            <Menu.Target>
+                                <Button>Toggle menu</Button>
+                            </Menu.Target>
+                            <Menu.Dropdown>
+                                <Menu.Label>Account</Menu.Label>
+                                <Menu.Item leftSection={<IconSettings style={{ width: 14 }} />}>
+                                    Settings
+                                </Menu.Item>
+                                <Menu.Divider />
+
+                                <Menu.Item color="red" leftSection={<IconLogout style={{ width: 14 }} />}>
+                                    Log out
+                                </Menu.Item>
+                            </Menu.Dropdown>
+                        </Menu>
+                    </div>
+
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md">
