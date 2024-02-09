@@ -58,6 +58,7 @@ export default function Login({}: Props) {
     return (
         <div className="flex h-screen justify-center items-center">
             <Box w={400} className="border p-6 rounded-xl bg-gray-50">
+                <h3 className='text-center text-2xl'>Login</h3>
                 <form onSubmit={form.onSubmit((values) => submitLogin(values))}>
                     <TextInput
                         withAsterisk
