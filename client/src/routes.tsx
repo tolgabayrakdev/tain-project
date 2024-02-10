@@ -35,7 +35,7 @@ const routes = createBrowserRouter([
         element: <DashboardLayout />,
         children: [
             { path: '', element: <IndexPage /> },
-            { path: 'settings', element: <SettingsPage /> }
+            { path: 'settings', element: <SettingsPage /> },
         ],
     },
 ]);

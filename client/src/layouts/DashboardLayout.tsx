@@ -1,7 +1,11 @@
-import { AppShell, Burger, Group, Menu, Skeleton, Button } from '@mantine/core';
+import { AppShell, Burger, Group, Menu, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconLogout, IconSettings } from '@tabler/icons-react';
-import { Outlet } from 'react-router-dom';
+import { IconLogout, IconPhoto, IconSettings } from '@tabler/icons-react';
+import {
+    Link,
+    NavLink,
+    Outlet,
+} from 'react-router-dom';
 
 type Props = {};
 
@@ -29,34 +33,87 @@ export default function DashboardLayout({ }: Props) {
                     <div>
                         <p>Logo</p>
                     </div>
-                    <div className='ml-auto mr-4'>
+                    <div className="ml-auto mr-4">
                         <Menu shadow="md" width={180}>
                             <Menu.Target>
                                 <Button>Toggle menu</Button>
                             </Menu.Target>
                             <Menu.Dropdown>
                                 <Menu.Label>Account</Menu.Label>
-                                <Menu.Item leftSection={<IconSettings style={{ width: 14 }} />}>
-                                    Settings
+                                <Menu.Item
+                                    leftSection={
+                                        <IconSettings style={{ width: 14 }} />
+                                    }
+                                >
+                                    <Link to="settings">Settings</Link>
                                 </Menu.Item>
                                 <Menu.Divider />
 
-                                <Menu.Item color="red" leftSection={<IconLogout style={{ width: 14 }} />}>
+                                <Menu.Item
+                                    color="red"
+                                    leftSection={
+                                        <IconLogout style={{ width: 14 }} />
+                                    }
+                                >
                                     Log out
                                 </Menu.Item>
                             </Menu.Dropdown>
                         </Menu>
                     </div>
-
                 </Group>
             </AppShell.Header>
-            <AppShell.Navbar p="md">
-                Navbar
-                {Array(15)
-                    .fill(0)
-                    .map((_, index) => (
-                        <Skeleton key={index} h={28} mt="sm" animate={false} />
-                    ))}
+            <AppShell.Navbar p="xs">
+                <Button
+                    mt="xl"
+                    variant="outline"
+                    leftSection={<IconPhoto size={14} />}
+                >
+                    <Link to="/">Galery</Link>
+                </Button>
+
+                <Button
+                    mt="md"
+                    variant="outline"
+                    leftSection={<IconPhoto size={14} />}
+                >
+                    Gallery
+                </Button>
+                <Button
+                    mt="md"
+                    variant="outline"
+                    leftSection={<IconPhoto size={14} />}
+                >
+                    Gallery
+                </Button>
+                <Link
+                    className="border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600"
+                    to="/"
+                >
+                    <IconPhoto width="15" className="mr-3" />
+                    Accounts
+                </Link>
+                <NavLink
+                    className={({ isActive }) =>
+                        isActive
+                            ? 'border flex justify-center mt-5 text-center p-1 rounded-md text-white hover:text-white font-medium border-blue-500 bg-blue-500 hover:border-blue-600'
+                            : 'border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600'
+                    }
+                    to=""
+                >
+                    <IconPhoto width="15" className="mr-3" />
+                    Home
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) =>
+                        isActive
+                            ? 'border flex justify-center mt-5 text-center p-1 rounded-md text-white hover:text-white font-medium border-blue-500 bg-blue-500 hover:border-blue-600'
+                            : 'border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600'
+                    }
+                    to="settings"
+                >
+                    <IconPhoto width="15" className="mr-3" />
+                    Settings
+                </NavLink>
             </AppShell.Navbar>
             <AppShell.Main>
                 <Outlet />
