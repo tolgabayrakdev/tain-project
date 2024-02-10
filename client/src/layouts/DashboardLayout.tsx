@@ -1,15 +1,11 @@
 import { AppShell, Burger, Group, Menu, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconLogout, IconPhoto, IconSettings } from '@tabler/icons-react';
-import {
-    Link,
-    NavLink,
-    Outlet,
-} from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 type Props = {};
 
-export default function DashboardLayout({ }: Props) {
+export default function DashboardLayout({}: Props) {
     const [opened, { toggle }] = useDisclosure();
 
     return (
@@ -63,7 +59,6 @@ export default function DashboardLayout({ }: Props) {
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="xs">
-               
                 <NavLink
                     className={({ isActive }) =>
                         isActive
