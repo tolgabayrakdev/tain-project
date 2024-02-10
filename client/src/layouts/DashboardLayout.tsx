@@ -63,45 +63,18 @@ export default function DashboardLayout({ }: Props) {
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="xs">
-                <Button
-                    mt="xl"
-                    variant="outline"
-                    leftSection={<IconPhoto size={14} />}
-                >
-                    <Link to="/">Galery</Link>
-                </Button>
-
-                <Button
-                    mt="md"
-                    variant="outline"
-                    leftSection={<IconPhoto size={14} />}
-                >
-                    Gallery
-                </Button>
-                <Button
-                    mt="md"
-                    variant="outline"
-                    leftSection={<IconPhoto size={14} />}
-                >
-                    Gallery
-                </Button>
-                <Link
-                    className="border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600"
-                    to="/"
-                >
-                    <IconPhoto width="15" className="mr-3" />
-                    Accounts
-                </Link>
+               
                 <NavLink
                     className={({ isActive }) =>
                         isActive
                             ? 'border flex justify-center mt-5 text-center p-1 rounded-md text-white hover:text-white font-medium border-blue-500 bg-blue-500 hover:border-blue-600'
                             : 'border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600'
                     }
-                    to=""
+                    end
+                    to="/dashboard"
                 >
                     <IconPhoto width="15" className="mr-3" />
-                    Home
+                    Dashboard
                 </NavLink>
                 <NavLink
                     className={({ isActive }) =>
