@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     TextInput,
     Checkbox,
@@ -8,10 +8,14 @@ import {
     PasswordInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { useState } from 'react';
 
 type Props = {};
 
-export default function Register({}: Props) {
+export default function Register({ }: Props) {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const form = useForm({
         initialValues: {
             username: '',
@@ -29,11 +33,59 @@ export default function Register({}: Props) {
                 value.length < 8 ? 'You must be at least 8 to password' : null,
         },
     });
+
+    const submitRegister = async (values: {
+        username: string;
+        email: string;
+        password: string;
+    }) => {
+        try {
+            setLoading(true);
+            const result = await fetch(
+                'http://localhost:5001/api/v1/auth/register',
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: values.username,
+                        email: values.email,
+                        password: values.password,
+                    }),
+                },
+            );
+            if (result.status === 201) {
+                setTimeout(() => {
+                    setLoading(false);
+                    notifications.show({
+                        title: 'Success',
+                        message: 'Account created successful. You are redirecting...',
+                        color: 'green',
+                    });
+                    navigate('/login');
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    setLoading(false);
+                    notifications.show({
+                        title: 'Error',
+                        message: 'Check your email or password!',
+                        color: 'red',
+                    });
+                }, 1500);
+            }
+        } catch (error) {
+            setLoading(false);
+            throw error;
+        }
+    };
     return (
         <div className="flex h-screen justify-center items-center">
             <Box w={400} className="border p-6 rounded-xl bg-gray-50">
                 <h3 className="text-center text-2xl">Register</h3>
-                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                <form onSubmit={form.onSubmit((values) => submitRegister(values))}>
                     <TextInput
                         withAsterisk
                         label="Username"
@@ -68,7 +120,9 @@ export default function Register({}: Props) {
                         >
                             You have already account?
                         </Link>
-                        <Button type="submit">Submit</Button>
+                        <Button loading={loading} type="submit">
+                            Submit
+                        </Button>
                     </Group>
                 </form>
             </Box>

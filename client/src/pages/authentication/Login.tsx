@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     TextInput,
     Checkbox,
@@ -9,10 +9,13 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { useState } from 'react';
 
 type Props = {};
 
 export default function Login({}: Props) {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const form = useForm({
         initialValues: {
             email: '',
@@ -30,6 +33,7 @@ export default function Login({}: Props) {
 
     const submitLogin = async (values: { email: string; password: string }) => {
         try {
+            setLoading(true);
             const result = await fetch(
                 'http:localhost:5001/api/v1/auth/login',
                 {
@@ -45,14 +49,23 @@ export default function Login({}: Props) {
                 },
             );
             if (result.status === 200) {
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate('/dashboard');
+                }, 1500);
             } else {
-                notifications.show({
-                    title: 'Default notification',
-                    message: 'Hey there, your code is awesome! 🤥',
-                });
+                setTimeout(() => {
+                    setLoading(false);
+                    notifications.show({
+                        title: 'Error',
+                        message: 'Check your email or password!',
+                        color: 'red',
+                    });
+                }, 1500);
             }
         } catch (error) {
-            console.log(error);
+            setLoading(false);
+            throw error;
         }
     };
     return (
@@ -88,7 +101,9 @@ export default function Login({}: Props) {
                         >
                             You dont have a account ?
                         </Link>
-                        <Button type="submit">Submit</Button>
+                        <Button loading={loading} type="submit">
+                            Submit
+                        </Button>
                     </Group>
                 </form>
             </Box>
