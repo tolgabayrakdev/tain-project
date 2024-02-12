@@ -3,8 +3,10 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconLogout, IconPhoto, IconSettings } from '@tabler/icons-react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../utils/AuthWrapper';
+import { useEffect, useState } from 'react';
 
 function DashboardLayout() {
+    const [verifyUsername, setVerifyUsername] = useState("");
     const [opened, { toggle }] = useDisclosure();
     const navigate = useNavigate();
 
@@ -21,6 +23,24 @@ function DashboardLayout() {
             throw error;
         }
     }
+
+    useEffect(() => {
+        const userVerify = async () => {
+            try {
+                const res = await fetch("http://localhost:5001/api/v1/auth/verify", {
+                    method: "POST",
+                    credentials: "include"
+                });
+                const data: any = await res.json();
+                setVerifyUsername(data.user.username)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        userVerify();
+    }, [])
+
+
 
     return (
         <AppShell
@@ -46,7 +66,7 @@ function DashboardLayout() {
                     <div className="ml-auto mr-4">
                         <Menu shadow="md" width={180}>
                             <Menu.Target>
-                                <Button>Toggle menu</Button>
+                                <Button>{verifyUsername}</Button>
                             </Menu.Target>
                             <Menu.Dropdown>
                                 <Menu.Label>Account</Menu.Label>
