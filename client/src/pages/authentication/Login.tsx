@@ -35,7 +35,7 @@ export default function Login({}: Props) {
         try {
             setLoading(true);
             const result = await fetch(
-                'http:localhost:5001/api/v1/auth/login',
+                'http://localhost:5001/api/v1/auth/login',
                 {
                     method: 'POST',
                     credentials: 'include',

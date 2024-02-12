@@ -1,12 +1,26 @@
 import { AppShell, Burger, Group, Menu, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconLogout, IconPhoto, IconSettings } from '@tabler/icons-react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import AuthWrapper from '../utils/AuthWrapper';
 
-type Props = {};
-
-export default function DashboardLayout({}: Props) {
+function DashboardLayout() {
     const [opened, { toggle }] = useDisclosure();
+    const navigate = useNavigate();
+
+    const submitLogout = async () => {
+        try {
+            const res = await fetch('http://localhost:5001/api/v1/auth/logout', {
+                method: "POST",
+                credentials: "include"
+            });
+            if (res.status === 200) {
+                navigate("/login");
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
 
     return (
         <AppShell
@@ -46,6 +60,7 @@ export default function DashboardLayout({}: Props) {
                                 <Menu.Divider />
 
                                 <Menu.Item
+                                    onClick={submitLogout}
                                     color="red"
                                     leftSection={
                                         <IconLogout style={{ width: 14 }} />
@@ -89,3 +104,5 @@ export default function DashboardLayout({}: Props) {
         </AppShell>
     );
 }
+
+export default AuthWrapper(DashboardLayout);

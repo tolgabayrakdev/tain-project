@@ -58,12 +58,12 @@ export default function Register({ }: Props) {
             );
             if (result.status === 201) {
                 setTimeout(() => {
-                    setLoading(false);
                     notifications.show({
                         title: 'Success',
                         message: 'Account created successful. You are redirecting...',
                         color: 'green',
                     });
+                    setLoading(false);
                     navigate('/login');
                 }, 1500);
             } else {
