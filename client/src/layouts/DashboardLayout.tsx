@@ -66,7 +66,7 @@ function DashboardLayout() {
                     <div className="ml-auto mr-4">
                         <Menu shadow="md" width={180}>
                             <Menu.Target>
-                                <Button>{verifyUsername}</Button>
+                                <Button><span className='underline'>{verifyUsername}</span></Button>
                             </Menu.Target>
                             <Menu.Dropdown>
                                 <Menu.Label>Account</Menu.Label>
