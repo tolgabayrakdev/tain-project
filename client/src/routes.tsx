@@ -8,6 +8,7 @@ const Home = lazy(() => import('./pages/Home'));
 /* Dashboard Pages */
 const IndexPage = lazy(() => import('./pages/dashboard/Index'));
 const SettingsPage = lazy(() => import('./pages/dashboard/Settings'));
+const MapPage = lazy(() => import('./pages/dashboard/Map'));
 const AuthenticationLayout = lazy(
     () => import('./layouts/AuthenticationLayout'),
 );
@@ -36,6 +37,7 @@ const routes = createBrowserRouter([
         children: [
             { path: '', element: <IndexPage /> },
             { path: 'settings', element: <SettingsPage /> },
+            { path: 'map', element: <MapPage /> }
         ],
     },
 ]);

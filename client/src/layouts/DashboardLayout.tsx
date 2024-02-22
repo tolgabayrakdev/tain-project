@@ -1,6 +1,6 @@
 import { AppShell, Burger, Group, Menu, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconLogout, IconPhoto, IconSettings } from '@tabler/icons-react';
+import { IconLogout, IconPhoto, IconSettings, IconWorld } from '@tabler/icons-react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import AuthWrapper from '../utils/AuthWrapper';
 import { useEffect, useState } from 'react';
@@ -116,6 +116,17 @@ function DashboardLayout() {
                 >
                     <IconPhoto width="15" className="mr-3" />
                     Settings
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) =>
+                        isActive
+                            ? 'border flex justify-center mt-5 text-center p-1 rounded-md text-white hover:text-white font-medium border-blue-500 bg-blue-500 hover:border-blue-600'
+                            : 'border flex justify-center mt-5 text-center p-1 rounded-md text-blue-500 hover:bg-gray-50 font-medium border-blue-500 hover:border-blue-600 hover:text-blue-600'
+                    }
+                    to="map"
+                >
+                    <IconWorld width="15" className="mr-3" />
+                    Map
                 </NavLink>
             </AppShell.Navbar>
             <AppShell.Main>
