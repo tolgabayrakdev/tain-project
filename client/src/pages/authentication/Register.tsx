@@ -11,7 +11,6 @@ import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
 
-
 export default function Register() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -59,7 +58,8 @@ export default function Register() {
                 setTimeout(() => {
                     notifications.show({
                         title: 'Success',
-                        message: 'Account created successful. You are redirecting...',
+                        message:
+                            'Account created successful. You are redirecting...',
                         color: 'green',
                     });
                     setLoading(false);
@@ -84,7 +84,9 @@ export default function Register() {
         <div className="flex h-screen justify-center items-center">
             <Box w={400} className="border p-6 rounded-xl bg-gray-50">
                 <h3 className="text-center text-2xl">Register</h3>
-                <form onSubmit={form.onSubmit((values) => submitRegister(values))}>
+                <form
+                    onSubmit={form.onSubmit((values) => submitRegister(values))}
+                >
                     <TextInput
                         withAsterisk
                         label="Username"

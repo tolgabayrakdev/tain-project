@@ -5,11 +5,6 @@ const Register = lazy(() => import('./pages/authentication/Register'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Home = lazy(() => import('./pages/Home'));
 
-/* Dashboard Pages */
-const IndexPage = lazy(() => import('./pages/dashboard/Index'));
-const SettingsPage = lazy(() => import('./pages/dashboard/Settings'));
-const MapPage = lazy(() => import('./pages/dashboard/Map'));
-const PeoplePage = lazy(() => import('./pages/dashboard/People'));
 const AuthenticationLayout = lazy(
     () => import('./layouts/AuthenticationLayout'),
 );
@@ -30,16 +25,6 @@ const routes = createBrowserRouter([
         children: [
             { path: 'login', element: <Login /> },
             { path: 'register', element: <Register /> },
-        ],
-    },
-    {
-        path: '/dashboard',
-        element: <DashboardLayout />,
-        children: [
-            { path: '', element: <IndexPage /> },
-            { path: 'settings', element: <SettingsPage /> },
-            { path: 'map', element: <MapPage /> },
-            { path: 'people', element: <PeoplePage /> }
         ],
     },
 ]);
